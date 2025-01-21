@@ -6,6 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		66A0D1DE2D4066A500CB7ABC /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 66A0D1DD2D4066A000CB7ABC /* README.md */; };
+		66A0D1E02D406A7E00CB7ABC /* IMG_7473.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 66A0D1DF2D406A7E00CB7ABC /* IMG_7473.PNG */; };
+		66A0D1E22D406A8600CB7ABC /* IMG_7472.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 66A0D1E12D406A8600CB7ABC /* IMG_7472.PNG */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		669211822D3D466200471216 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +33,9 @@
 		6692116C2D3D466000471216 /* Sailaway Boat Data.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sailaway Boat Data.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		669211812D3D466200471216 /* Sailaway Boat DataTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Sailaway Boat DataTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6692118B2D3D466200471216 /* Sailaway Boat DataUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Sailaway Boat DataUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		66A0D1DD2D4066A000CB7ABC /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		66A0D1DF2D406A7E00CB7ABC /* IMG_7473.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_7473.PNG; sourceTree = "<group>"; };
+		66A0D1E12D406A8600CB7ABC /* IMG_7472.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_7472.PNG; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -75,6 +84,9 @@
 		669211632D3D465F00471216 = {
 			isa = PBXGroup;
 			children = (
+				66A0D1DF2D406A7E00CB7ABC /* IMG_7473.PNG */,
+				66A0D1E12D406A8600CB7ABC /* IMG_7472.PNG */,
+				66A0D1DD2D4066A000CB7ABC /* README.md */,
 				6692116E2D3D466000471216 /* Sailaway Boat Data */,
 				669211842D3D466200471216 /* Sailaway Boat DataTests */,
 				6692118E2D3D466200471216 /* Sailaway Boat DataUITests */,
@@ -212,6 +224,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66A0D1E02D406A7E00CB7ABC /* IMG_7473.PNG in Resources */,
+				66A0D1DE2D4066A500CB7ABC /* README.md in Resources */,
+				66A0D1E22D406A8600CB7ABC /* IMG_7472.PNG in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
