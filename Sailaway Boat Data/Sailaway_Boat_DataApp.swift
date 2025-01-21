@@ -8,13 +8,10 @@
 import SwiftUI
 
 @main
-struct Sailaway_Boat_DataApp: App {
-    let persistenceController = PersistenceController.shared
-
+struct SailawayBoatDataApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }
