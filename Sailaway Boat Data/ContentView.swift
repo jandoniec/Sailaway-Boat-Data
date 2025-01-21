@@ -8,9 +8,10 @@
 import SwiftUI
 import CoreData
 
-
 struct ContentView: View {
     var body: some View {
-        LoginView() // Wyświetlamy LoginView jako główny ekran aplikacji
+        NavigationView {
+            LoginView()
+        }
     }
 }

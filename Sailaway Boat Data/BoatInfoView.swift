@@ -12,29 +12,14 @@
 //  Created by Jan Doniec on 19/01/2025.
 //
 
+
 import SwiftUI
 
 struct BoatInfoView: View {
     var boat: BoatInfo
-    @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
         VStack(spacing: 20) {
-            // Przycisk Powrót
-            HStack {
-                Button(action: {
-                    presentationMode.wrappedValue.dismiss()
-                }) {
-                    HStack {
-                        Image(systemName: "chevron.left")
-                        Text("Powrót do Your Boats")
-                    }
-                }
-                .foregroundColor(.blue)
-                .padding()
-                Spacer()
-            }
-
             // Nazwa łodzi
             Text(boat.boatname ?? "Unknown Boat")
                 .font(.custom("BebasNeue", size: 40))
@@ -56,10 +41,10 @@ struct BoatInfoView: View {
                         .font(.custom("BebasNeue", size: 18))
                         .foregroundColor(.white)
                     Text(formatToDMSWithDirection(boat.latitude, isLongitude: false))
-                        .font(.custom("LCDMono2", size: 18)) // Zmniejszony rozmiar czcionki
+                        .font(.custom("LCDMono2", size: 18))
                         .foregroundColor(.blue)
-                        .lineLimit(1) // Nie pozwól na łamanie linii
-                        .minimumScaleFactor(0.5) // Skalowanie tekstu, jeśli jest za długi
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
                 }
 
                 VStack {
@@ -67,10 +52,10 @@ struct BoatInfoView: View {
                         .font(.custom("BebasNeue", size: 18))
                         .foregroundColor(.white)
                     Text(formatToDMSWithDirection(boat.longitude, isLongitude: true))
-                        .font(.custom("LCDMono2", size: 18)) // Zmniejszony rozmiar czcionki
+                        .font(.custom("LCDMono2", size: 18))
                         .foregroundColor(.green)
-                        .lineLimit(1) // Nie pozwól na łamanie linii
-                        .minimumScaleFactor(0.5) // Skalowanie tekstu, jeśli jest za długi
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
                 }
             }
             .padding()
@@ -151,52 +136,48 @@ struct BoatInfoView: View {
         }
         .padding()
         .background(Color.black.edgesIgnoringSafeArea(.all))
-        .navigationBarBackButtonHidden(true) // Ukrycie domyślnego przycisku Back
     }
 
-    // Formatowanie współrzędnych na format DMS (stopnie, minuty, sekundy) z kierunkiem
     private func formatToDMSWithDirection(_ value: Double?, isLongitude: Bool) -> String {
         guard let value = value else { return "N/A" }
-        
+
         let degrees = Int(value)
         let decimalPart = abs(value) - Double(degrees)
         let minutes = Int(decimalPart * 60)
         let secondsDecimal = (decimalPart * 60) - Double(minutes)
         let seconds = Int(secondsDecimal * 60)
-        
+
         let direction: String
         if isLongitude {
             direction = value >= 0 ? "E" : "W"
         } else {
             direction = value >= 0 ? "N" : "S"
         }
-        
+
         return "\(abs(degrees))° \(minutes)' \(seconds)\" \(direction)"
     }
 
-    // Funkcja do pojedynczego bloku danych
     @ViewBuilder
     private func dataBlock(title: String, value: String, color: Color, useHelveticaForKnots: Bool = false) -> some View {
         VStack {
             Text(title)
-                .font(.custom("BebasNeue", size: 18)) // Nagłówek
+                .font(.custom("BebasNeue", size: 18))
                 .foregroundColor(.white)
-            
+
             if useHelveticaForKnots, value.contains("knots") {
-                // Rozdziel wartość i jednostkę
                 let parts = value.split(separator: " ")
                 if let mainValue = parts.first, parts.count > 1 {
                     HStack(spacing: 2) {
-                        Text(String(mainValue)) // Główna wartość
+                        Text(String(mainValue))
                             .font(.custom("LCDMono2", size: 24))
                             .foregroundColor(color)
-                        Text("knots") // Jednostka
-                            .font(.system(size: 18, weight: .medium, design: .default)) // Helvetica
+                        Text("knots")
+                            .font(.system(size: 18, weight: .medium))
                             .foregroundColor(color)
                     }
                 }
             } else {
-                Text(value) // Cała wartość
+                Text(value)
                     .font(.custom("LCDMono2", size: 24))
                     .foregroundColor(color)
             }
@@ -207,7 +188,6 @@ struct BoatInfoView: View {
         .cornerRadius(10)
     }
 
-    // Formatowanie liczb z określoną liczbą miejsc po przecinku
     private func formatToDecimal(_ value: Double?, decimals: Int) -> String {
         guard let value = value else { return "N/A" }
         return String(format: "%.\(decimals)f", value)

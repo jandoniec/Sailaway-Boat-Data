@@ -5,81 +5,66 @@ struct LoginView: View {
     @State private var apiKey: String = UserDefaults.standard.string(forKey: "apiKey") ?? ""
     @State private var errorMessage: String?
     @State private var isLoggedIn: Bool = false
-    @State private var boats: [Boat] = []
 
     var body: some View {
-        NavigationView {
-            VStack {
-                Text("Sailaway Login")
-                    .font(.largeTitle)
-                    .padding(.bottom, 40)
+        VStack(spacing: 20) {
+            Text("Sailaway Login")
+                .font(.custom("BebasNeue", size: 40))
+                .foregroundColor(.white)
+                .padding(.top, 20)
 
-                TextField("Username (usrnr)", text: $username)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .autocapitalization(.none)
+            TextField("Username", text: $username)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .autocapitalization(.none)
+                .padding()
+
+            SecureField("API Key", text: $apiKey)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
+
+            if let errorMessage = errorMessage {
+                Text(errorMessage)
+                    .foregroundColor(.red)
                     .padding()
-
-                SecureField("API Key", text: $apiKey)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .autocapitalization(.none)
-                    .padding()
-
-                if let errorMessage = errorMessage {
-                    Text(errorMessage)
-                        .foregroundColor(.red)
-                        .padding()
-                }
-
-                Button(action: login) {
-                    Text("Log In")
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.blue)
-                        .cornerRadius(8)
-                        .padding(.horizontal)
-                }
-
-                Spacer()
-
-                NavigationLink(
-                    destination: BoatSelectionView(username: username, apiKey: apiKey),
-                    isActive: $isLoggedIn
-                ) {
-                    EmptyView()
-                }
-                .navigationBarBackButtonHidden(true) // Ukrycie przycisku "Back"
-
-
             }
-            .padding()
+
+            Button(action: login) {
+                Text("Log In")
+                    .foregroundColor(.white)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(LinearGradient(gradient: Gradient(colors: [Color.purple, Color.blue]), startPoint: .topLeading, endPoint: .bottomTrailing))
+                    .cornerRadius(8)
+            }
+
+            Spacer()
+
+            NavigationLink("", destination: BoatSelectionView(username: username, apiKey: apiKey), isActive: $isLoggedIn)
+                .hidden()
         }
+        .padding()
+        .background(Color.black.edgesIgnoringSafeArea(.all))
     }
 
     private func login() {
-        let sanitizedUsername = username.trimmingCharacters(in: .whitespacesAndNewlines)
-        let sanitizedApiKey = apiKey.trimmingCharacters(in: .whitespacesAndNewlines)
-
-        guard !sanitizedUsername.isEmpty, !sanitizedApiKey.isEmpty else {
+        guard !username.isEmpty, !apiKey.isEmpty else {
             errorMessage = "Both fields are required."
             return
         }
-
-        APIService.fetchBoats(username: sanitizedUsername, apiKey: sanitizedApiKey) { result in
+        APIService.testLogin(username: username, apiKey: apiKey) { result in
             DispatchQueue.main.async {
                 switch result {
-                case .success(let fetchedBoats):
-                    self.boats = fetchedBoats
-                    self.isLoggedIn = true
-                    saveLoginData(username: sanitizedUsername, apiKey: sanitizedApiKey) // Zapisz dane
+                case .success:
+                    saveCredentials()
+                    isLoggedIn = true
                 case .failure(let error):
-                    self.errorMessage = "Login failed: \(error.localizedDescription)"
+                    errorMessage = error.localizedDescription
                 }
             }
         }
     }
 
-    private func saveLoginData(username: String, apiKey: String) {
+    private func saveCredentials() {
         UserDefaults.standard.set(username, forKey: "username")
         UserDefaults.standard.set(apiKey, forKey: "apiKey")
     }
